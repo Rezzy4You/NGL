@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NGL - Kirim Pesan Massal</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background: linear-gradient(to right, #667eea, #764ba2);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 40px;
+      padding-bottom: 60px;
+    }
+
+    .logo {
+      margin-bottom: 20px;
+    }
+
+    .logo img {
+      width: 120px;
+      filter: drop-shadow(0 0 10px #ffffff90);
+      border-radius: 50%;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 12px;
+      backdrop-filter: blur(10px);
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    input, textarea, select, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: none;
+      font-size: 16px;
+    }
+
+    button {
+      background: #ffffff20;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: all 0.2s ease;
+    }
+
+    button:disabled {
+      background: #ffffff10;
+      cursor: not-allowed;
+    }
+
+    .success {
+      margin-top: 20px;
+      background: #4caf50aa;
+      padding: 10px;
+      border-radius: 8px;
+      display: none;
+      text-align: center;
+    }
+
+    .credits {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 15px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 400px;
+      text-align: left;
+      font-size: 14px;
+      backdrop-filter: blur(10px);
+    }
+
+    .credits h3 {
+      margin-top: 0;
+      margin-bottom: 10px;
+      color: #ffdd57;
+      text-align: center;
+    }
+
+    .credits ul {
+      list-style-type: none;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    .credits li {
+      margin: 4px 0;
+    }
+  </style>
+</head>
+<body>
+  <!-- Logo besar -->
+  <div class="logo">
+    <img src="https://files.catbox.moe/bsuta3.png" alt="Logo">
+  </div>
+
+  <!-- Form Pengiriman -->
+  <div class="container">
+    <h2>📤 Spammer Pesan To NGL</h2>
+    <form id="nglForm">
+      <label for="username">Username NGL</label>
+      <input type="text" id="username" placeholder="contoh: rezzy4you" required />
+
+      <label for="count">Jumlah Kirim (1–1000)</label>
+      <select id="count" required></select>
+
+      <label for="message">Pesan</label>
+      <textarea id="message" rows="4" placeholder="Tulis pesan..." maxlength="500" required></textarea>
+
+      <button type="submit" id="sendBtn">Kirim Sekarang</button>
+    </form>
+
+    <div class="success" id="successBox">✅ Semua pesan terkirim!</div>
+  </div>
+
+  <!-- Tabel CREDITS -->
+  <div class="credits">
+    <h3>👑 CREDITS</h3>
+    <ul>
+      <li><strong>Developer</strong>: Rezzy4You</li>
+      <li><strong>Friends</strong>: Zaan Store</li>
+      <li><strong>Friends</strong>: Ryuu Store</li>
+    </ul>
+  </div>
+
+  <script>
+    // Generate 1–1000
+    const countSelect = document.getElementById("count");
+    for (let i = 1; i <= 1000; i++) {
+      const opt = document.createElement("option");
+      opt.value = i;
+      opt.text = i;
+      countSelect.appendChild(opt);
+    }
+
+    const form = document.getElementById("nglForm");
+    const successBox = document.getElementById("successBox");
+    const sendBtn = document.getElementById("sendBtn");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const username = document.getElementById("username").value.trim();
+      const message = document.getElementById("message").value.trim();
+      const count = parseInt(document.getElementById("count").value);
+
+      if (!username || !message || !count) {
+        alert("Semua kolom wajib diisi!");
+        return;
+      }
+
+      sendBtn.disabled = true;
+      sendBtn.innerText = "Mengirim...";
+
+      let successCount = 0;
+
+      for (let i = 0; i < count; i++) {
+        try {
+          const res = await fetch("https://1e3f76b0-3679-4071-9e97-52ed52ac319c-00-103ut90vhg38q.sisko.replit.dev/api/send", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, message })
+          });
+
+          if (res.ok) successCount++;
+          await new Promise(resolve => setTimeout(resolve, 300));
+        } catch (err) {
+          console.warn(`Gagal kirim #${i + 1}:`, err.message);
+        }
+      }
+
+      sendBtn.disabled = false;
+      sendBtn.innerText = "Kirim Sekarang";
+      form.reset();
+
+      successBox.innerText = `✅ Berhasil mengirim ${successCount} dari ${count} pesan`;
+      successBox.style.display = "block";
+      setTimeout(() => successBox.style.display = "none", 4000);
+    });
+  </script>
+</body>
+</html>

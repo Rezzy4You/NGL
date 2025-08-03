@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>NGL - Kirim Pesan Massal</title>
+  <title>Spammer To NGL</title>
   <style>
     body {
       margin: 0;
@@ -107,12 +107,12 @@
 
   <!-- Form Pengiriman -->
   <div class="container">
-    <h2>”9à2 Spammer Pesan To NGL</h2>
+    <h2>â€ðŸ“¤ Spammer Pesan To NGL</h2>
     <form id="nglForm">
       <label for="username">Username NGL</label>
       <input type="text" id="username" placeholder="contoh: rezzy4you" required />
 
-      <label for="count">Jumlah Kirim (1¨C1000)</label>
+      <label for="count">Jumlah Kirim (1-1000)</label>
       <select id="count" required></select>
 
       <label for="message">Pesan</label>
@@ -121,12 +121,12 @@
       <button type="submit" id="sendBtn">Kirim Sekarang</button>
     </form>
 
-    <div class="success" id="successBox">7¼3 Semua pesan terkirim!</div>
+    <div class="success" id="successBox">âœ… Semua pesan terkirim!</div>
   </div>
 
   <!-- Tabel CREDITS -->
   <div class="credits">
-    <h3>”9Ñ5 CREDITS</h3>
+    <h3>â€ðŸ‘‘ CREDITS</h3>
     <ul>
       <li><strong>Developer</strong>: Rezzy4You</li>
       <li><strong>Friends</strong>: Zaan Store</li>
@@ -135,7 +135,7 @@
   </div>
 
   <script>
-    // Generate 1¨C1000
+    // Generate 1Â¨C1000
     const countSelect = document.getElementById("count");
     for (let i = 1; i <= 1000; i++) {
       const opt = document.createElement("option");
@@ -184,10 +184,11 @@
       sendBtn.innerText = "Kirim Sekarang";
       form.reset();
 
-      successBox.innerText = `7¼3 Berhasil mengirim ${successCount} dari ${count} pesan`;
+      successBox.innerText = `Â7Â¼3 Berhasil mengirim ${successCount} dari ${count} pesan`;
       successBox.style.display = "block";
       setTimeout(() => successBox.style.display = "none", 4000);
     });
   </script>
 </body>
+
 </html>
